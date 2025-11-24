@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 // Configure CORS to only allow requests from the frontend origin
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://handsome-expression-production.up.railway.app";
 app.use(
     cors({
         origin: FRONTEND_URL,
