@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 // Get the BACKEND_URL from Vite env with a default
-const VITE_BACKEND_URL = process.env.VITE_BACKEND_URL || "https://precious-amazement-production.up.railway.app";
+const VITE_BACKEND_URL = "https://precious-amazement-production.up.railway.app";
 
 /*
  * This provider should export a `user` context state that is 
