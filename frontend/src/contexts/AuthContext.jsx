@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 // Get the BACKEND_URL from Vite env with a default
-const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+const VITE_BACKEND_URL = process.env.VITE_BACKEND_URL || "https://precious-amazement-production.up.railway.app";
 
 /*
  * This provider should export a `user` context state that is 
@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
+        // Fetch user info with the token
         fetch(`${VITE_BACKEND_URL}/user/me`, {
             method: 'GET',
             headers: {
@@ -86,9 +87,8 @@ export const AuthProvider = ({ children }) => {
                 return data.message || 'Login failed';
             }
 
-            // Success: store token (exact key 'token' required by tester), update user state, navigate
+            // Success: store token, update user state, navigate
             const token = data.token;
-            // Store the token as 'Bearer <token>' because backend UserService.verify expects that format
             localStorage.setItem('token', `Bearer ${token}`);
 
             // fetch the user info
@@ -98,8 +98,6 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (!meRes.ok) {
-                // clear token if unable to retrieve user
-                localStorage.removeItem('token');
                 return 'Failed to retrieve user info';
             }
 
@@ -118,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     /**
      * Registers a new user. 
      * 
-     * @remarks Upon success, navigates to "/success".
+     * @remarks Upon success, navigates to "/".
      * @param {Object} userData - The data of the user to register.
      * @returns {string} - Upon failure, returns an error message.
      */
